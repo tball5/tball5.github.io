@@ -83,28 +83,57 @@
             const dx = x - cx;
             const dy = y - cy;
             
-            const headWidth = 24;
-            const headHeight = 22;
-            const headDist = (dx * dx) / (headWidth * headWidth) + (dy * dy) / (headHeight * headHeight);
+            const upperHeadWidth = 20;
+            const upperHeadHeight = 15;
+            const lowerJawWidth = 26;
+            const lowerJawHeight = 18;
             
-            if (dy < -8 && Math.abs(dx) < 20) {
-                const foreheadDist = (dx * dx) / (20 * 20) + ((dy + 8) * (dy + 8)) / (8 * 8);
-                if (foreheadDist < 1.2) {
-                    const isEdge = foreheadDist > 0.85 && foreheadDist < 1.2;
-                    return { inFace: true, depth: 1.5 - foreheadDist, isEdge };
+            if (dy < 0) {
+                const upperDist = (dx * dx) / (upperHeadWidth * upperHeadWidth) + (dy * dy) / (upperHeadHeight * upperHeadHeight);
+                
+                if (dy < -8 && Math.abs(dx) < 20) {
+                    const foreheadDist = (dx * dx) / (20 * 20) + ((dy + 8) * (dy + 8)) / (8 * 8);
+                    if (foreheadDist < 1.2) {
+                        const isEdge = foreheadDist > 0.85 && foreheadDist < 1.2;
+                        return { inFace: true, depth: 1.5 - foreheadDist, isEdge, hairZone: 0 };
+                    }
+                }
+                
+                if (upperDist < 1) {
+                    const isEdge = upperDist > 0.75 && upperDist < 1;
+                    return { inFace: true, depth: 1 - upperDist, isEdge, hairZone: 0 };
+                }
+            } else {
+                const cheekRounding = Math.pow(Math.abs(dx) / lowerJawWidth, 2.5);
+                const jawRounding = Math.pow(Math.abs(dy) / lowerJawHeight, 1.8);
+                const lowerDist = cheekRounding + jawRounding;
+                
+                if (lowerDist < 1) {
+                    const isEdge = lowerDist > 0.65 && lowerDist < 1;
+                    return { inFace: true, depth: 1 - lowerDist, isEdge, hairZone: 0 };
                 }
             }
             
-            if (headDist < 1) {
-                const isEdge = headDist > 0.75 && headDist < 1;
-                return { inFace: true, depth: 1 - headDist, isEdge };
+            const upperDist = (dx * dx) / (upperHeadWidth * upperHeadWidth) + (dy * dy) / (upperHeadHeight * upperHeadHeight);
+            const cheekRounding = Math.pow(Math.abs(dx) / lowerJawWidth, 2.5);
+            const jawRounding = Math.pow(Math.abs(dy) / lowerJawHeight, 1.8);
+            const lowerDist = cheekRounding + jawRounding;
+            const minDist = Math.min(upperDist, lowerDist);
+            
+            if (minDist >= 1 && minDist < 1.15) {
+                return { inFace: false, depth: 0, isEdge: true, hairZone: 1 };
+            }
+            if (minDist >= 1.15 && minDist < 1.35) {
+                return { inFace: false, depth: 0, isEdge: false, hairZone: 2 };
+            }
+            if (minDist >= 1.35 && minDist < 1.6) {
+                return { inFace: false, depth: 0, isEdge: false, hairZone: 3 };
+            }
+            if (minDist >= 1.6 && minDist < 1.9) {
+                return { inFace: false, depth: 0, isEdge: false, hairZone: 4 };
             }
             
-            if (headDist >= 1 && headDist < 1.15) {
-                return { inFace: false, depth: 0, isEdge: true };
-            }
-            
-            return { inFace: false, depth: 0, isEdge: false };
+            return { inFace: false, depth: 0, isEdge: false, hairZone: 0 };
         }
 
         function isInEyes(x, y) {
@@ -215,22 +244,27 @@
             
             const t = time * 0.03;
             
-            if (Math.random() < 0.02) {
-                const ry = Math.floor(height / 2 - 15 + Math.random() * 30);
-                const checkFace = isInFace(width / 2, ry);
-                if (checkFace.inFace) {
-                    textPositions.push({
-                        x: -textString.length,
-                        y: ry,
-                        life: width + textString.length + 20
-                    });
+            if (Math.random() < 0.005 && textPositions.length === 0) {
+                const mouthY = Math.floor(height / 2 + 12);
+                let startX = width / 2;
+                for (let checkX = 0; checkX < width; checkX++) {
+                    const checkFace = isInFace(checkX, mouthY);
+                    if (checkFace.inFace) {
+                        startX = checkX;
+                        break;
+                    }
                 }
+                textPositions.push({
+                    x: startX,
+                    y: mouthY,
+                    life: 100
+                });
             }
             
             textPositions = textPositions.filter(pos => {
-                pos.x += 0.5;
+                pos.x += 0.2;
                 pos.life--;
-                return pos.life > 0 && pos.x < width;
+                return pos.life > 0;
             });
             
             for (let y = 0; y < height; y++) {
@@ -290,13 +324,20 @@
                                     }
                                     else if (faceInfo.isEdge) {
                                         const dotPattern = Math.sin(x * 0.8 + y * 0.6 + t * 0.3);
-                                        if (dotPattern > 0.3) {
+                                        if (dotPattern > 0.1) {
+                                            grid[y][x] = '.';
+                                        }
+                                    }
+                                    else if (faceInfo.hairZone > 0) {
+                                        const hairDensity = 1 - (faceInfo.hairZone * 0.15);
+                                        const hairPattern = Math.sin(x * 0.9 + y * 0.7 + t * 0.2) * Math.cos(x * 0.5 + y * 0.4);
+                                        if (hairPattern > (0.2 - hairDensity)) {
                                             grid[y][x] = '.';
                                         }
                                     }
                                     else {
                                         const bgPattern = Math.sin(x * 0.1 + t * 0.3) * Math.cos(y * 0.08 + t * 0.2);
-                                        if (bgPattern > 0.9) {
+                                        if (bgPattern > 0.95) {
                                             grid[y][x] = '.';
                                         }
                                     }
@@ -311,7 +352,10 @@
                 for (let i = 0; i < textString.length; i++) {
                     const tx = Math.floor(pos.x) + i;
                     if (tx >= 0 && tx < width && pos.y >= 0 && pos.y < height) {
-                        grid[pos.y][tx] = textString[i];
+                        const checkFace = isInFace(tx, pos.y);
+                        if (checkFace.inFace) {
+                            grid[pos.y][tx] = textString[i];
+                        }
                     }
                 }
             });
