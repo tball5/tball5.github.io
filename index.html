@@ -83,12 +83,17 @@
             const dx = x - cx;
             const dy = y - cy;
             
+            // Upper head - narrower at top
             const upperHeadWidth = 20;
             const upperHeadHeight = 15;
+            
+            // Lower jaw - wider and more pronounced with rounded cheeks
             const lowerJawWidth = 26;
             const lowerJawHeight = 18;
             
+            // Split face into upper and lower regions
             if (dy < 0) {
+                // Upper head region (narrower)
                 const upperDist = (dx * dx) / (upperHeadWidth * upperHeadWidth) + (dy * dy) / (upperHeadHeight * upperHeadHeight);
                 
                 if (dy < -8 && Math.abs(dx) < 20) {
@@ -104,8 +109,10 @@
                     return { inFace: true, depth: 1 - upperDist, isEdge, hairZone: 0 };
                 }
             } else {
-                const cheekRounding = Math.pow(Math.abs(dx) / lowerJawWidth, 2.5);
-                const jawRounding = Math.pow(Math.abs(dy) / lowerJawHeight, 1.8);
+                // Lower jaw region with rounded cheeks - smoother transitions
+                // Add cheek rounding by using a more complex distance calculation
+                const cheekRounding = Math.pow(Math.abs(dx) / lowerJawWidth, 3.0);
+                const jawRounding = Math.pow(Math.abs(dy) / lowerJawHeight, 2.2);
                 const lowerDist = cheekRounding + jawRounding;
                 
                 if (lowerDist < 1) {
@@ -114,9 +121,10 @@
                 }
             }
             
+            // Hair zones - calculate from both upper and lower
             const upperDist = (dx * dx) / (upperHeadWidth * upperHeadWidth) + (dy * dy) / (upperHeadHeight * upperHeadHeight);
-            const cheekRounding = Math.pow(Math.abs(dx) / lowerJawWidth, 2.5);
-            const jawRounding = Math.pow(Math.abs(dy) / lowerJawHeight, 1.8);
+            const cheekRounding = Math.pow(Math.abs(dx) / lowerJawWidth, 3.0);
+            const jawRounding = Math.pow(Math.abs(dy) / lowerJawHeight, 2.2);
             const lowerDist = cheekRounding + jawRounding;
             const minDist = Math.min(upperDist, lowerDist);
             
@@ -246,6 +254,7 @@
             
             if (Math.random() < 0.005 && textPositions.length === 0) {
                 const mouthY = Math.floor(height / 2 + 12);
+                // Find leftmost face boundary at mouth height
                 let startX = width / 2;
                 for (let checkX = 0; checkX < width; checkX++) {
                     const checkFace = isInFace(checkX, mouthY);
@@ -257,12 +266,12 @@
                 textPositions.push({
                     x: startX,
                     y: mouthY,
-                    life: 100
+                    life: 150
                 });
             }
             
             textPositions = textPositions.filter(pos => {
-                pos.x += 0.2;
+                pos.x += 0.1;
                 pos.life--;
                 return pos.life > 0;
             });
@@ -352,6 +361,7 @@
                 for (let i = 0; i < textString.length; i++) {
                     const tx = Math.floor(pos.x) + i;
                     if (tx >= 0 && tx < width && pos.y >= 0 && pos.y < height) {
+                        // Draw text across entire face horizontally at mouth level
                         const checkFace = isInFace(tx, pos.y);
                         if (checkFace.inFace) {
                             grid[pos.y][tx] = textString[i];
