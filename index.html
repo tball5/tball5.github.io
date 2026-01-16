@@ -252,27 +252,27 @@
             
             const t = time * 0.03;
             
-            if (Math.random() < 0.005 && textPositions.length === 0) {
+            if (Math.random() < 0.008 && textPositions.length === 0) {
                 const mouthY = Math.floor(height / 2 + 12);
-                // Find leftmost face boundary at mouth height
-                let startX = width / 2;
-                for (let checkX = 0; checkX < width; checkX++) {
-                    const checkFace = isInFace(checkX, mouthY);
-                    if (checkFace.inFace) {
-                        startX = checkX;
-                        break;
-                    }
-                }
+                const centerX = Math.floor(width / 2 - textString.length / 2);
                 textPositions.push({
-                    x: startX,
+                    x: centerX,
                     y: mouthY,
-                    life: 150
+                    life: 80,
+                    opacity: 0
                 });
             }
             
             textPositions = textPositions.filter(pos => {
-                pos.x += 0.1;
                 pos.life--;
+                // Fade in for first 20 frames, stay visible, then fade out in last 20 frames
+                if (pos.life > 60) {
+                    pos.opacity = (80 - pos.life) / 20;
+                } else if (pos.life < 20) {
+                    pos.opacity = pos.life / 20;
+                } else {
+                    pos.opacity = 1;
+                }
                 return pos.life > 0;
             });
             
