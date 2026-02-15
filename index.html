@@ -14,12 +14,34 @@
         body {
             margin: 0;
             background: #0a0a0a;
-            overflow: hidden;
+            overflow-y: auto;
+            overflow-x: hidden;
             font-family: monospace;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Matrix Rain Background */
+        #rain-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Main Container */
+        .container {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            padding: 60px 20px;
         }
 
         #canvas {
@@ -29,24 +51,105 @@
             color: #00ff88;
             user-select: none;
             white-space: pre;
+            text-align: center;
+            margin: auto;
         }
 
-        .container {
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            height: 100%;
+        .vault-button {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 8px 20px;
+            background: transparent;
+            color: rgba(0, 255, 136, 0.4);
+            font-size: 0.75rem;
+            font-weight: normal;
+            border: none;
+            border-radius: 0;
+            cursor: pointer;
+            font-family: monospace;
+            letter-spacing: 0.15em;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            z-index: 10;
+        }
+
+        .vault-button:hover {
+            color: rgba(0, 255, 136, 0.8);
+            transform: translateX(-50%) translateY(-2px);
+        }
+
+        .vault-button:active {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            #canvas {
+                font-size: 10px;
+            }
+            
+            .vault-button {
+                padding: 10px 25px;
+                font-size: 0.9rem;
+                bottom: 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #canvas {
+                font-size: 8px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Matrix Rain Canvas -->
+    <canvas id="rain-canvas"></canvas>
+
+    <!-- Main Content -->
     <div class="container">
         <div id="canvas"></div>
     </div>
+    
+    <a href="https://originsoflate.xyz/vault/" class="vault-button">VAULT</a>
 
     <script>
+        // Matrix Rain (calm, full-screen)
+        const rainCanvas = document.getElementById('rain-canvas');
+        const ctx = rainCanvas.getContext('2d');
+        rainCanvas.width = window.innerWidth;
+        rainCanvas.height = window.innerHeight;
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()_+-=[]{}|;:\'",.<>?/～!！@#￥%……&*（）——+【】｛｝；：＂＇，。、《》？';
+        const fontSize = 14;
+        let columns = rainCanvas.width / fontSize;
+        let drops = Array(Math.floor(columns)).fill(1);
+        
+        function drawRain() {
+            ctx.fillStyle = 'rgba(10, 10, 10, 0.08)';
+            ctx.fillRect(0, 0, rainCanvas.width, rainCanvas.height);
+            ctx.fillStyle = '#00ff88';
+            ctx.font = fontSize + 'px monospace';
+            for (let i = 0; i < drops.length; i++) {
+                const text = chars[Math.floor(Math.random() * chars.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                if (drops[i] * fontSize > rainCanvas.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
+            }
+        }
+        
+        drawRain();
+        setInterval(drawRain, 45);
+        
+        window.addEventListener('resize', () => {
+            rainCanvas.width = window.innerWidth;
+            rainCanvas.height = window.innerHeight;
+            columns = rainCanvas.width / fontSize;
+            drops = Array(Math.floor(columns)).fill(1);
+        });
+
+        // ASCII Gorilla Face
         const canvas = document.getElementById('canvas');
         let width = 80;
         let height = 50;
@@ -83,17 +186,12 @@
             const dx = x - cx;
             const dy = y - cy;
             
-            // Upper head - narrower at top
             const upperHeadWidth = 20;
             const upperHeadHeight = 15;
-            
-            // Lower jaw - wider and more pronounced with rounded cheeks
             const lowerJawWidth = 26;
             const lowerJawHeight = 18;
             
-            // Split face into upper and lower regions
             if (dy < 0) {
-                // Upper head region (narrower)
                 const upperDist = (dx * dx) / (upperHeadWidth * upperHeadWidth) + (dy * dy) / (upperHeadHeight * upperHeadHeight);
                 
                 if (dy < -8 && Math.abs(dx) < 20) {
@@ -109,8 +207,6 @@
                     return { inFace: true, depth: 1 - upperDist, isEdge, hairZone: 0 };
                 }
             } else {
-                // Lower jaw region with rounded cheeks - smoother transitions
-                // Add cheek rounding by using a more complex distance calculation
                 const cheekRounding = Math.pow(Math.abs(dx) / lowerJawWidth, 3.0);
                 const jawRounding = Math.pow(Math.abs(dy) / lowerJawHeight, 2.2);
                 const lowerDist = cheekRounding + jawRounding;
@@ -121,7 +217,6 @@
                 }
             }
             
-            // Hair zones - calculate from both upper and lower
             const upperDist = (dx * dx) / (upperHeadWidth * upperHeadWidth) + (dy * dy) / (upperHeadHeight * upperHeadHeight);
             const cheekRounding = Math.pow(Math.abs(dx) / lowerJawWidth, 3.0);
             const jawRounding = Math.pow(Math.abs(dy) / lowerJawHeight, 2.2);
@@ -265,7 +360,6 @@
             
             textPositions = textPositions.filter(pos => {
                 pos.life--;
-                // Fade in for first 20 frames, stay visible, then fade out in last 20 frames
                 if (pos.life > 60) {
                     pos.opacity = (80 - pos.life) / 20;
                 } else if (pos.life < 20) {
@@ -358,13 +452,14 @@
             }
             
             textPositions.forEach(pos => {
-                for (let i = 0; i < textString.length; i++) {
-                    const tx = Math.floor(pos.x) + i;
-                    if (tx >= 0 && tx < width && pos.y >= 0 && pos.y < height) {
-                        // Draw text across entire face horizontally at mouth level
-                        const checkFace = isInFace(tx, pos.y);
-                        if (checkFace.inFace) {
-                            grid[pos.y][tx] = textString[i];
+                if (pos.opacity > Math.random()) {
+                    for (let i = 0; i < textString.length; i++) {
+                        const tx = Math.floor(pos.x) + i;
+                        if (tx >= 0 && tx < width && pos.y >= 0 && pos.y < height) {
+                            const checkFace = isInFace(tx, pos.y);
+                            if (checkFace.inFace) {
+                                grid[pos.y][tx] = textString[i];
+                            }
                         }
                     }
                 }
