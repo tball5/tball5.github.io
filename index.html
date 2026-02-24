@@ -86,13 +86,13 @@
 
         .chess-button {
             position: fixed;
-            bottom: 100px;
+            bottom: 130px;
             left: 50%;
             transform: translateX(-50%);
             padding: 8px 20px;
             background: transparent;
-            color: rgba(0, 255, 136, 0.4);
-            font-size: 0.75rem;
+            color: rgba(0, 255, 136, 0.5);
+            font-size: 0.8rem;
             font-weight: normal;
             border: none;
             cursor: pointer;
@@ -105,19 +105,44 @@
         }
 
         .chess-button:hover {
-            color: rgba(0, 255, 136, 0.8);
+            color: rgba(0, 255, 136, 0.9);
+            transform: translateX(-50%) translateY(-2px);
+        }
+
+        .mines-button {
+            position: fixed;
+            bottom: 160px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 8px 20px;
+            background: transparent;
+            color: rgba(0, 255, 136, 0.5);
+            font-size: 0.8rem;
+            font-weight: normal;
+            border: none;
+            cursor: pointer;
+            font-family: monospace;
+            letter-spacing: 0.15em;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            z-index: 10;
+        }
+
+        .mines-button:hover {
+            color: rgba(0, 255, 136, 0.9);
             transform: translateX(-50%) translateY(-2px);
         }
 
         .sunset-button {
             position: fixed;
-            bottom: 70px;
+            bottom: 100px;
             left: 50%;
             transform: translateX(-50%);
             padding: 8px 20px;
             background: transparent;
-            color: rgba(0, 255, 136, 0.4);
-            font-size: 0.75rem;
+            color: rgba(0, 255, 136, 0.5);
+            font-size: 0.8rem;
             font-weight: normal;
             border: none;
             cursor: pointer;
@@ -130,19 +155,19 @@
         }
 
         .sunset-button:hover {
-            color: rgba(0, 255, 136, 0.8);
+            color: rgba(0, 255, 136, 0.9);
             transform: translateX(-50%) translateY(-2px);
         }
 
         .garage-button {
             position: fixed;
-            bottom: 40px;
+            bottom: 70px;
             left: 50%;
             transform: translateX(-50%);
             padding: 8px 20px;
             background: transparent;
-            color: rgba(0, 255, 136, 0.4);
-            font-size: 0.75rem;
+            color: rgba(0, 255, 136, 0.5);
+            font-size: 0.8rem;
             font-weight: normal;
             border: none;
             cursor: pointer;
@@ -155,7 +180,7 @@
         }
 
         .garage-button:hover {
-            color: rgba(0, 255, 136, 0.8);
+            color: rgba(0, 255, 136, 0.9);
             transform: translateX(-50%) translateY(-2px);
         }
 
@@ -176,22 +201,28 @@
                 right: 15px;
             }
 
+            .mines-button {
+                padding: 6px 15px;
+                font-size: 0.75rem;
+                bottom: 140px;
+            }
+
             .chess-button {
                 padding: 6px 15px;
-                font-size: 0.7rem;
-                bottom: 90px;
+                font-size: 0.75rem;
+                bottom: 110px;
             }
 
             .sunset-button {
                 padding: 6px 15px;
-                font-size: 0.7rem;
-                bottom: 60px;
+                font-size: 0.75rem;
+                bottom: 80px;
             }
 
             .garage-button {
                 padding: 6px 15px;
-                font-size: 0.7rem;
-                bottom: 30px;
+                font-size: 0.75rem;
+                bottom: 50px;
             }
         }
 
@@ -212,9 +243,10 @@
     </div>
     
     <a href="https://originsoflate.xyz/vault/" class="vault-button">VAULT</a>
+    <a href="https://originsoflate.xyz/mines/" class="mines-button">MINES</a>
     <a href="https://originsoflate.xyz/chess/" class="chess-button">CHESS</a>
-    <a href="https://originsoflate.xyz/sunsethoops/" class="sunset-button">SUNSET HOOPS</a>
-    <a href="https://shaden.technology/garage/" class="garage-button">The Garage</a>
+    <a href="https://originsoflate.xyz/sunsethoops/" class="sunset-button">HOOPS</a>
+    <a href="https://shaden.technology/garage/" class="garage-button">GARAGE</a>
 
     <script>
         // Matrix Rain (calm, full-screen)
