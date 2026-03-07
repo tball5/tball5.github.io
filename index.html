@@ -84,9 +84,9 @@
             transform: translateY(0);
         }
 
-        .chess-button {
+        .diamonds-button {
             position: fixed;
-            bottom: 130px;
+            bottom: 220px;
             left: 50%;
             transform: translateX(-50%);
             padding: 8px 20px;
@@ -104,14 +104,14 @@
             z-index: 10;
         }
 
-        .chess-button:hover {
+        .diamonds-button:hover {
             color: rgba(0, 255, 136, 0.9);
             transform: translateX(-50%) translateY(-2px);
         }
 
         .mines-button {
             position: fixed;
-            bottom: 160px;
+            bottom: 190px;
             left: 50%;
             transform: translateX(-50%);
             padding: 8px 20px;
@@ -134,9 +134,34 @@
             transform: translateX(-50%) translateY(-2px);
         }
 
+        .chess-button {
+            position: fixed;
+            bottom: 160px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 8px 20px;
+            background: transparent;
+            color: rgba(0, 255, 136, 0.5);
+            font-size: 0.8rem;
+            font-weight: normal;
+            border: none;
+            cursor: pointer;
+            font-family: monospace;
+            letter-spacing: 0.15em;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            z-index: 10;
+        }
+
+        .chess-button:hover {
+            color: rgba(0, 255, 136, 0.9);
+            transform: translateX(-50%) translateY(-2px);
+        }
+
         .sunset-button {
             position: fixed;
-            bottom: 100px;
+            bottom: 130px;
             left: 50%;
             transform: translateX(-50%);
             padding: 8px 20px;
@@ -161,7 +186,7 @@
 
         .garage-button {
             position: fixed;
-            bottom: 70px;
+            bottom: 100px;
             left: 50%;
             transform: translateX(-50%);
             padding: 8px 20px;
@@ -184,6 +209,31 @@
             transform: translateX(-50%) translateY(-2px);
         }
 
+        .cyberboard-button {
+            position: fixed;
+            bottom: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 8px 20px;
+            background: transparent;
+            color: rgba(0, 255, 136, 0.5);
+            font-size: 0.8rem;
+            font-weight: normal;
+            border: none;
+            cursor: pointer;
+            font-family: monospace;
+            letter-spacing: 0.15em;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            z-index: 10;
+        }
+
+        .cyberboard-button:hover {
+            color: rgba(0, 255, 136, 0.9);
+            transform: translateX(-50%) translateY(-2px);
+        }
+
         @media (max-width: 768px) {
             .container {
                 min-height: 110vh;
@@ -201,25 +251,37 @@
                 right: 15px;
             }
 
+            .diamonds-button {
+                padding: 6px 15px;
+                font-size: 0.75rem;
+                bottom: 200px;
+            }
+
             .mines-button {
                 padding: 6px 15px;
                 font-size: 0.75rem;
-                bottom: 140px;
+                bottom: 170px;
             }
 
             .chess-button {
                 padding: 6px 15px;
                 font-size: 0.75rem;
-                bottom: 110px;
+                bottom: 140px;
             }
 
             .sunset-button {
                 padding: 6px 15px;
                 font-size: 0.75rem;
-                bottom: 80px;
+                bottom: 110px;
             }
 
             .garage-button {
+                padding: 6px 15px;
+                font-size: 0.75rem;
+                bottom: 80px;
+            }
+
+            .cyberboard-button {
                 padding: 6px 15px;
                 font-size: 0.75rem;
                 bottom: 50px;
@@ -243,10 +305,12 @@
     </div>
     
     <a href="https://originsoflate.xyz/vault/" class="vault-button">VAULT</a>
+    <a href="https://originsoflate.xyz/diamondintherough/" class="diamonds-button">DIAMONDS</a>
     <a href="https://originsoflate.xyz/mines/" class="mines-button">MINES</a>
     <a href="https://originsoflate.xyz/chess/" class="chess-button">CHESS</a>
     <a href="https://originsoflate.xyz/sunsethoops/" class="sunset-button">HOOPS</a>
     <a href="https://shaden.technology/garage/" class="garage-button">GARAGE</a>
+    <a href="https://originsoflate.xyz/cyberboard/" class="cyberboard-button">CYBERBOARD</a>
 
     <script>
         // Matrix Rain (calm, full-screen)
