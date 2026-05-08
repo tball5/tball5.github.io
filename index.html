@@ -14,7 +14,6 @@
         body {
             margin: 0;
             background: #0a0a0a;
-            overflow-y: scroll;
             overflow-x: hidden;
             font-family: monospace;
             min-height: 100vh;
@@ -36,17 +35,17 @@
         .container {
             position: relative;
             z-index: 1;
-            min-height: 120vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 80px 20px;
+            padding: 90px 20px 200px;
         }
 
         #canvas {
-            line-height: 0.9;
-            letter-spacing: 0.08em;
+            line-height: 0.92;
+            letter-spacing: 0.09em;
             font-size: 14px;
             color: #00ff88;
             user-select: none;
@@ -55,243 +54,239 @@
             margin: auto;
         }
 
+        .bottom-text {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 5;
+        }
+
+        .title {
+            color: rgba(0, 255, 136, 0.9);
+            font-size: 1.5rem;
+            margin-bottom: 6px;
+            letter-spacing: 0.25em;
+            text-align: center;
+            text-shadow: 0 0 12px rgba(0, 255, 136, 0.4);
+        }
+
+        .slogan {
+            color: rgba(0, 255, 136, 0.6);
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            text-align: center;
+            font-style: italic;
+        }
+
+        /* Top Tabs Container */
+        .top-tabs {
+            position: fixed;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 40px;
+            z-index: 20;
+        }
+
+        .tab {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .tab-button {
+            background: transparent;
+            color: rgba(0, 255, 136, 0.7);
+            font-size: 1rem;
+            border: 1px solid transparent;
+            padding: 10px 28px;
+            font-family: monospace;
+            letter-spacing: 0.2em;
+            cursor: pointer;
+            transition: all 0.35s ease;
+        }
+
+        .tab-button:hover {
+            color: #00ff88;
+            border-color: #00ff88;
+            text-shadow: 0 0 8px rgba(0, 255, 136, 0.5);
+        }
+
+        .tab-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: 10px;
+            background: rgba(10, 10, 10, 0.85);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            min-width: 160px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .tab:hover .tab-dropdown {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .tab-dropdown a {
+            display: block;
+            padding: 12px 20px;
+            color: rgba(0, 255, 136, 0.7);
+            text-decoration: none;
+            font-size: 0.85rem;
+            letter-spacing: 0.15em;
+            transition: all 0.3s ease;
+            text-align: center;
+            border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+        }
+
+        .tab-dropdown a:last-child {
+            border-bottom: none;
+        }
+
+        .tab-dropdown a:hover {
+            color: #00ff88;
+            background: rgba(0, 255, 136, 0.1);
+            transform: translateX(8px);
+            text-shadow: 0 0 8px rgba(0, 255, 136, 0.5);
+        }
+
+        /* Left Side Buttons */
+        .left-button {
+            position: fixed;
+            left: 45px;
+            padding: 11px 26px;
+            background: transparent;
+            color: rgba(0, 255, 136, 0.6);
+            font-size: 0.85rem;
+            font-weight: normal;
+            border: none;
+            cursor: pointer;
+            font-family: monospace;
+            letter-spacing: 0.15em;
+            transition: all 0.35s ease;
+            text-decoration: none;
+            z-index: 10;
+        }
+
+        .left-button:hover {
+            color: #00ff88;
+            transform: translateX(12px);
+            text-shadow: 0 0 8px rgba(0, 255, 136, 0.5);
+        }
+
+        /* Garage Button */
+        .garage-button {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 12px 36px;
+            background: transparent;
+            color: rgba(0, 255, 136, 0.85);
+            font-size: 0.98rem;
+            font-weight: normal;
+            border: 1px solid transparent;
+            cursor: pointer;
+            font-family: monospace;
+            letter-spacing: 0.22em;
+            transition: all 0.4s ease;
+            text-decoration: none;
+            z-index: 10;
+        }
+
+        .garage-button:hover {
+            color: #00ff88;
+            border-color: #00ff88;
+            transform: translateX(-50%) translateY(-4px);
+            text-shadow: 0 0 8px rgba(0, 255, 136, 0.5);
+        }
+
+        /* Vault Button */
         .vault-button {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            padding: 8px 20px;
+            bottom: 22px;
+            right: 28px;
+            padding: 8px 22px;
             background: transparent;
-            color: rgba(0, 255, 136, 0);
+            color: rgba(0, 255, 136, 0.25);
             font-size: 0.65rem;
             font-weight: normal;
             border: none;
-            border-radius: 0;
             cursor: pointer;
             font-family: monospace;
             letter-spacing: 0.15em;
             transition: all 0.4s ease;
             text-decoration: none;
-            display: inline-block;
             z-index: 10;
         }
 
         .vault-button:hover {
-            color: rgba(0, 255, 136, 0.3);
+            color: rgba(0, 255, 136, 0.45);
             transform: translateY(-2px);
         }
 
-        .vault-button:active {
-            transform: translateY(0);
-        }
+        /* Left button positions */
+        .diamonds-button   { top: 38%; }
+        .cyberboard-button { top: 50%; }
 
-        .diamonds-button {
-            position: fixed;
-            bottom: 220px;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 8px 20px;
-            background: transparent;
-            color: rgba(0, 255, 136, 0.5);
-            font-size: 0.8rem;
-            font-weight: normal;
-            border: none;
-            cursor: pointer;
-            font-family: monospace;
-            letter-spacing: 0.15em;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            z-index: 10;
-        }
-
-        .diamonds-button:hover {
-            color: rgba(0, 255, 136, 0.9);
-            transform: translateX(-50%) translateY(-2px);
-        }
-
-        .mines-button {
-            position: fixed;
-            bottom: 190px;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 8px 20px;
-            background: transparent;
-            color: rgba(0, 255, 136, 0.5);
-            font-size: 0.8rem;
-            font-weight: normal;
-            border: none;
-            cursor: pointer;
-            font-family: monospace;
-            letter-spacing: 0.15em;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            z-index: 10;
-        }
-
-        .mines-button:hover {
-            color: rgba(0, 255, 136, 0.9);
-            transform: translateX(-50%) translateY(-2px);
-        }
-
-        .chess-button {
-            position: fixed;
-            bottom: 160px;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 8px 20px;
-            background: transparent;
-            color: rgba(0, 255, 136, 0.5);
-            font-size: 0.8rem;
-            font-weight: normal;
-            border: none;
-            cursor: pointer;
-            font-family: monospace;
-            letter-spacing: 0.15em;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            z-index: 10;
-        }
-
-        .chess-button:hover {
-            color: rgba(0, 255, 136, 0.9);
-            transform: translateX(-50%) translateY(-2px);
-        }
-
-        .sunset-button {
-            position: fixed;
-            bottom: 130px;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 8px 20px;
-            background: transparent;
-            color: rgba(0, 255, 136, 0.5);
-            font-size: 0.8rem;
-            font-weight: normal;
-            border: none;
-            cursor: pointer;
-            font-family: monospace;
-            letter-spacing: 0.15em;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            z-index: 10;
-        }
-
-        .sunset-button:hover {
-            color: rgba(0, 255, 136, 0.9);
-            transform: translateX(-50%) translateY(-2px);
-        }
-
-        .garage-button {
-            position: fixed;
-            bottom: 100px;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 8px 20px;
-            background: transparent;
-            color: rgba(0, 255, 136, 0.5);
-            font-size: 0.8rem;
-            font-weight: normal;
-            border: none;
-            cursor: pointer;
-            font-family: monospace;
-            letter-spacing: 0.15em;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            z-index: 10;
-        }
-
-        .garage-button:hover {
-            color: rgba(0, 255, 136, 0.9);
-            transform: translateX(-50%) translateY(-2px);
-        }
-
-        .cyberboard-button {
-            position: fixed;
-            bottom: 70px;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 8px 20px;
-            background: transparent;
-            color: rgba(0, 255, 136, 0.5);
-            font-size: 0.8rem;
-            font-weight: normal;
-            border: none;
-            cursor: pointer;
-            font-family: monospace;
-            letter-spacing: 0.15em;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            z-index: 10;
-        }
-
-        .cyberboard-button:hover {
-            color: rgba(0, 255, 136, 0.9);
-            transform: translateX(-50%) translateY(-2px);
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                min-height: 110vh;
-                padding: 60px 20px;
+        /* Mobile */
+        @media (max-width: 900px) {
+            .top-tabs {
+                gap: 20px;
             }
-
-            #canvas {
-                font-size: 10px;
+            .tab-button {
+                padding: 8px 20px;
+                font-size: 0.9rem;
             }
-            
-            .vault-button {
-                padding: 6px 15px;
-                font-size: 0.6rem;
-                bottom: 15px;
-                right: 15px;
+            .left-button {
+                left: 25px;
+                padding: 10px 22px;
+                font-size: 0.8rem;
             }
-
-            .diamonds-button {
-                padding: 6px 15px;
-                font-size: 0.75rem;
-                bottom: 200px;
-            }
-
-            .mines-button {
-                padding: 6px 15px;
-                font-size: 0.75rem;
-                bottom: 170px;
-            }
-
-            .chess-button {
-                padding: 6px 15px;
-                font-size: 0.75rem;
-                bottom: 140px;
-            }
-
-            .sunset-button {
-                padding: 6px 15px;
-                font-size: 0.75rem;
-                bottom: 110px;
-            }
-
             .garage-button {
-                padding: 6px 15px;
-                font-size: 0.75rem;
-                bottom: 80px;
+                padding: 11px 32px;
+                font-size: 0.93rem;
             }
-
-            .cyberboard-button {
-                padding: 6px 15px;
-                font-size: 0.75rem;
-                bottom: 50px;
+            .vault-button {
+                right: 18px;
+                font-size: 0.62rem;
             }
         }
 
-        @media (max-width: 480px) {
-            #canvas {
-                font-size: 8px;
+        @media (max-width: 600px) {
+            .title {
+                font-size: 1.45rem;
+                margin-bottom: 45px;
             }
+            .top-tabs {
+                top: 20px;
+                gap: 15px;
+            }
+            .tab-button {
+                padding: 7px 16px;
+                font-size: 0.8rem;
+            }
+            .left-button {
+                left: 18px;
+                font-size: 0.77rem;
+                padding: 9px 20px;
+            }
+            .container {
+                padding-top: 110px;
+                padding-bottom: 160px;
+            }
+            #canvas {
+                font-size: 12px;
+            }
+            .diamonds-button   { top: 38%; }
+            .cyberboard-button { top: 50%; }
         }
     </style>
 </head>
@@ -299,21 +294,49 @@
     <!-- Matrix Rain Canvas -->
     <canvas id="rain-canvas"></canvas>
 
+    <!-- Top Tabs -->
+    <div class="top-tabs">
+        <div class="tab">
+            <button class="tab-button">GAMES</button>
+            <div class="tab-dropdown">
+                <a href="https://originsoflate.xyz/diamondintherough/">DIAMONDS</a>
+                <a href="https://originsoflate.xyz/mines/">MINES</a>
+                <a href="https://originsoflate.xyz/sunsethoops/">HOOPS</a>
+                <a href="https://originsoflate.xyz/chess/">CHESS</a>
+            </div>
+        </div>
+        <div class="tab">
+            <button class="tab-button">SOUNDS</button>
+            <div class="tab-dropdown">
+                <a href="https://originsoflate.xyz/pondering/">PONDERING</a>
+                <a href="#">MUSIC</a>
+            </div>
+        </div>
+        <div class="tab">
+            <button class="tab-button">TECH</button>
+            <div class="tab-dropdown">
+                <a href="https://originsoflate.xyz/cyberboard/">CYBERBOARD</a>
+                <a href="https://shaden.technology/garage/">THE GARAGE</a>
+            </div>
+        </div>
+    </div>
+
     <!-- Main Content -->
     <div class="container">
         <div id="canvas"></div>
     </div>
-    
+
+    <!-- Bottom Title and Slogan -->
+    <div class="bottom-text">
+        <div class="title">ORIGINS OF LATE</div>
+        <div class="slogan">A personal digital studio</div>
+    </div>
+
+    <!-- Vault Bottom Right -->
     <a href="https://originsoflate.xyz/vault/" class="vault-button">VAULT</a>
-    <a href="https://originsoflate.xyz/diamondintherough/" class="diamonds-button">DIAMONDS</a>
-    <a href="https://originsoflate.xyz/mines/" class="mines-button">MINES</a>
-    <a href="https://originsoflate.xyz/chess/" class="chess-button">CHESS</a>
-    <a href="https://originsoflate.xyz/sunsethoops/" class="sunset-button">HOOPS</a>
-    <a href="https://shaden.technology/garage/" class="garage-button">GARAGE</a>
-    <a href="https://originsoflate.xyz/cyberboard/" class="cyberboard-button">CYBERBOARD</a>
 
     <script>
-        // Matrix Rain (calm, full-screen)
+        // Matrix Rain
         const rainCanvas = document.getElementById('rain-canvas');
         const ctx = rainCanvas.getContext('2d');
         rainCanvas.width = window.innerWidth;
@@ -390,7 +413,6 @@
             
             if (dy < 0) {
                 const upperDist = (dx * dx) / (upperHeadWidth * upperHeadWidth) + (dy * dy) / (upperHeadHeight * upperHeadHeight);
-                
                 if (dy < -8 && Math.abs(dx) < 20) {
                     const foreheadDist = (dx * dx) / (20 * 20) + ((dy + 8) * (dy + 8)) / (8 * 8);
                     if (foreheadDist < 1.2) {
@@ -398,7 +420,6 @@
                         return { inFace: true, depth: 1.5 - foreheadDist, isEdge, hairZone: 0 };
                     }
                 }
-                
                 if (upperDist < 1) {
                     const isEdge = upperDist > 0.75 && upperDist < 1;
                     return { inFace: true, depth: 1 - upperDist, isEdge, hairZone: 0 };
@@ -407,7 +428,6 @@
                 const cheekRounding = Math.pow(Math.abs(dx) / lowerJawWidth, 3.0);
                 const jawRounding = Math.pow(Math.abs(dy) / lowerJawHeight, 2.2);
                 const lowerDist = cheekRounding + jawRounding;
-                
                 if (lowerDist < 1) {
                     const isEdge = lowerDist > 0.65 && lowerDist < 1;
                     return { inFace: true, depth: 1 - lowerDist, isEdge, hairZone: 0 };
@@ -420,18 +440,10 @@
             const lowerDist = cheekRounding + jawRounding;
             const minDist = Math.min(upperDist, lowerDist);
             
-            if (minDist >= 1 && minDist < 1.15) {
-                return { inFace: false, depth: 0, isEdge: true, hairZone: 1 };
-            }
-            if (minDist >= 1.15 && minDist < 1.35) {
-                return { inFace: false, depth: 0, isEdge: false, hairZone: 2 };
-            }
-            if (minDist >= 1.35 && minDist < 1.6) {
-                return { inFace: false, depth: 0, isEdge: false, hairZone: 3 };
-            }
-            if (minDist >= 1.6 && minDist < 1.9) {
-                return { inFace: false, depth: 0, isEdge: false, hairZone: 4 };
-            }
+            if (minDist >= 1 && minDist < 1.15) return { inFace: false, depth: 0, isEdge: true, hairZone: 1 };
+            if (minDist >= 1.15 && minDist < 1.35) return { inFace: false, depth: 0, isEdge: false, hairZone: 2 };
+            if (minDist >= 1.35 && minDist < 1.6) return { inFace: false, depth: 0, isEdge: false, hairZone: 3 };
+            if (minDist >= 1.6 && minDist < 1.9) return { inFace: false, depth: 0, isEdge: false, hairZone: 4 };
             
             return { inFace: false, depth: 0, isEdge: false, hairZone: 0 };
         }
@@ -448,15 +460,10 @@
             const rightDist = Math.sqrt((x - rightEyeX) ** 2 + (y - cy) ** 2);
             
             if (leftDist < socketRadius || rightDist < socketRadius) {
-                if (leftDist < pupilRadius || rightDist < pupilRadius) {
-                    return { inEyes: true, isPupil: true, isDeepSocket: false };
-                }
-                if (leftDist < eyeRadius || rightDist < eyeRadius) {
-                    return { inEyes: true, isPupil: false, isDeepSocket: false };
-                }
+                if (leftDist < pupilRadius || rightDist < pupilRadius) return { inEyes: true, isPupil: true, isDeepSocket: false };
+                if (leftDist < eyeRadius || rightDist < eyeRadius) return { inEyes: true, isPupil: false, isDeepSocket: false };
                 return { inEyes: true, isPupil: false, isDeepSocket: true };
             }
-            
             return { inEyes: false, isPupil: false, isDeepSocket: false };
         }
 
@@ -465,15 +472,12 @@
             const browHeight = 3;
             const browWidth = 22;
             const cx = width / 2;
-            
             const dy = Math.abs(y - cy);
             const dx = Math.abs(x - cx);
-            
             if (dy < browHeight && dx < browWidth) {
                 const intensity = 1 - (dy / browHeight) * (dx / browWidth);
                 return { inBrow: true, intensity };
             }
-            
             return { inBrow: false, intensity: 0 };
         }
 
@@ -483,9 +487,7 @@
             const noseWidth = 8;
             const noseHeight = 6;
             
-            if (Math.abs(x - cx) < 3 && y > cy - 6 && y < cy) {
-                return { inNose: true, isNostril: false, isBridge: true };
-            }
+            if (Math.abs(x - cx) < 3 && y > cy - 6 && y < cy) return { inNose: true, isNostril: false, isBridge: true };
             
             if (Math.abs(x - cx) < noseWidth && Math.abs(y - cy) < noseHeight) {
                 const leftNostrilX = cx - 4;
@@ -499,10 +501,8 @@
                 if (leftNostrilDist < nostrilRadius || rightNostrilDist < nostrilRadius) {
                     return { inNose: true, isNostril: true, isBridge: false };
                 }
-                
                 return { inNose: true, isNostril: false, isBridge: false };
             }
-            
             return { inNose: false, isNostril: false, isBridge: false };
         }
 
@@ -511,14 +511,11 @@
             const cy = height / 2 + 12;
             const mouthWidth = 11;
             const lipHeight = 2;
-            
             const dx = x - cx;
             const dy = y - cy;
-            
             if (Math.abs(dx) < mouthWidth && Math.abs(dy) < lipHeight) {
                 return { inMouth: true, isLip: Math.abs(dy) < 1 };
             }
-            
             return { inMouth: false, isLip: false };
         }
 
@@ -527,43 +524,28 @@
             const cy = height / 2 + 9;
             const muzzleWidth = 16;
             const muzzleHeight = 10;
-            
             const dx = (x - cx) / muzzleWidth;
             const dy = (y - cy) / muzzleHeight;
             const dist = dx * dx + dy * dy;
-            
-            if (dist < 1) {
-                return { inMuzzle: true, depth: 1 - dist };
-            }
-            
+            if (dist < 1) return { inMuzzle: true, depth: 1 - dist };
             return { inMuzzle: false, depth: 0 };
         }
 
         function update() {
             initGrid();
-            
             const t = time * 0.03;
             
             if (Math.random() < 0.008 && textPositions.length === 0) {
                 const mouthY = Math.floor(height / 2 + 12);
                 const centerX = Math.floor(width / 2 - textString.length / 2);
-                textPositions.push({
-                    x: centerX,
-                    y: mouthY,
-                    life: 80,
-                    opacity: 0
-                });
+                textPositions.push({ x: centerX, y: mouthY, life: 80, opacity: 0 });
             }
             
             textPositions = textPositions.filter(pos => {
                 pos.life--;
-                if (pos.life > 60) {
-                    pos.opacity = (80 - pos.life) / 20;
-                } else if (pos.life < 20) {
-                    pos.opacity = pos.life / 20;
-                } else {
-                    pos.opacity = 1;
-                }
+                if (pos.life > 60) pos.opacity = (80 - pos.life) / 20;
+                else if (pos.life < 20) pos.opacity = pos.life / 20;
+                else pos.opacity = 1;
                 return pos.life > 0;
             });
             
@@ -576,70 +558,36 @@
                     const browInfo = isInBrow(x, y);
                     if (browInfo.inBrow) {
                         grid[y][x] = browInfo.intensity > 0.5 ? '8' : '1';
-                    }
-                    else {
+                    } else {
                         const eyeInfo = isInEyes(x, y);
                         if (eyeInfo.inEyes) {
-                            if (eyeInfo.isPupil) {
-                                grid[y][x] = '8';
-                            } else if (eyeInfo.isDeepSocket) {
-                                grid[y][x] = '8';
-                            } else {
-                                grid[y][x] = '1';
-                            }
-                        }
-                        else {
+                            grid[y][x] = eyeInfo.isPupil ? '8' : (eyeInfo.isDeepSocket ? '8' : '1');
+                        } else {
                             const noseInfo = isInNose(x, y);
                             if (noseInfo.inNose) {
-                                if (noseInfo.isNostril) {
-                                    grid[y][x] = '8';
-                                } else if (noseInfo.isBridge) {
-                                    grid[y][x] = '1';
-                                } else {
-                                    grid[y][x] = wave > 0 ? '1' : '8';
-                                }
-                            }
-                            else {
+                                grid[y][x] = noseInfo.isNostril ? '8' : (noseInfo.isBridge ? '1' : (wave > 0 ? '1' : '8'));
+                            } else {
                                 const mouthInfo = isInMouth(x, y);
                                 if (mouthInfo.inMouth) {
                                     grid[y][x] = mouthInfo.isLip ? '8' : '1';
-                                }
-                                else {
+                                } else {
                                     const muzzleInfo = isInMuzzle(x, y);
                                     if (muzzleInfo.inMuzzle) {
                                         const muzzlePattern = wave * 0.4 + noise * 0.6 + muzzleInfo.depth;
-                                        if (muzzlePattern > 0.5) {
-                                            grid[y][x] = '1';
-                                        } else {
-                                            grid[y][x] = '8';
-                                        }
-                                    }
-                                    else if (faceInfo.inFace) {
+                                        grid[y][x] = muzzlePattern > 0.5 ? '1' : '8';
+                                    } else if (faceInfo.inFace) {
                                         const combined = wave + noise + faceInfo.depth * 0.7;
-                                        if (combined > 0.5) {
-                                            grid[y][x] = '1';
-                                        } else {
-                                            grid[y][x] = '8';
-                                        }
-                                    }
-                                    else if (faceInfo.isEdge) {
+                                        grid[y][x] = combined > 0.5 ? '1' : '8';
+                                    } else if (faceInfo.isEdge) {
                                         const dotPattern = Math.sin(x * 0.8 + y * 0.6 + t * 0.3);
-                                        if (dotPattern > 0.1) {
-                                            grid[y][x] = '.';
-                                        }
-                                    }
-                                    else if (faceInfo.hairZone > 0) {
+                                        if (dotPattern > 0.1) grid[y][x] = '.';
+                                    } else if (faceInfo.hairZone > 0) {
                                         const hairDensity = 1 - (faceInfo.hairZone * 0.15);
                                         const hairPattern = Math.sin(x * 0.9 + y * 0.7 + t * 0.2) * Math.cos(x * 0.5 + y * 0.4);
-                                        if (hairPattern > (0.2 - hairDensity)) {
-                                            grid[y][x] = '.';
-                                        }
-                                    }
-                                    else {
+                                        if (hairPattern > (0.2 - hairDensity)) grid[y][x] = '.';
+                                    } else {
                                         const bgPattern = Math.sin(x * 0.1 + t * 0.3) * Math.cos(y * 0.08 + t * 0.2);
-                                        if (bgPattern > 0.95) {
-                                            grid[y][x] = '.';
-                                        }
+                                        if (bgPattern > 0.95) grid[y][x] = '.';
                                     }
                                 }
                             }
@@ -654,9 +602,7 @@
                         const tx = Math.floor(pos.x) + i;
                         if (tx >= 0 && tx < width && pos.y >= 0 && pos.y < height) {
                             const checkFace = isInFace(tx, pos.y);
-                            if (checkFace.inFace) {
-                                grid[pos.y][tx] = textString[i];
-                            }
+                            if (checkFace.inFace) grid[pos.y][tx] = textString[i];
                         }
                     }
                 }
