@@ -54,9 +54,10 @@
             margin: auto;
         }
 
-        .bottom-text {
+        /* Top Title Container */
+        .top-text {
             position: fixed;
-            bottom: 40px;
+            top: 30px;
             left: 50%;
             transform: translateX(-50%);
             text-align: center;
@@ -80,10 +81,10 @@
             font-style: italic;
         }
 
-        /* Top Tabs Container */
+        /* Top Tabs Container - moved to bottom under gorilla */
         .top-tabs {
             position: fixed;
-            top: 30px;
+            bottom: 60px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
@@ -116,10 +117,10 @@
 
         .tab-dropdown {
             position: absolute;
-            top: 100%;
+            bottom: 100%;
             left: 50%;
             transform: translateX(-50%);
-            margin-top: 10px;
+            margin-bottom: 10px;
             background: rgba(10, 10, 10, 0.85);
             border: 1px solid rgba(0, 255, 136, 0.3);
             min-width: 160px;
@@ -142,8 +143,9 @@
             font-size: 0.85rem;
             letter-spacing: 0.15em;
             transition: all 0.3s ease;
-            text-align: center;
+            text-align: left;
             border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+            position: relative;
         }
 
         .tab-dropdown a:last-child {
@@ -153,8 +155,50 @@
         .tab-dropdown a:hover {
             color: #00ff88;
             background: rgba(0, 255, 136, 0.1);
-            transform: translateX(8px);
             text-shadow: 0 0 8px rgba(0, 255, 136, 0.5);
+        }
+
+        .tab-dropdown a .emoji {
+            margin-left: 10px;
+        }
+
+        /* Tooltip description - default goes right */
+        .tab-dropdown a .description {
+            position: absolute;
+            left: 105%;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(10, 10, 10, 0.95);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            padding: 10px 15px;
+            min-width: 220px;
+            max-width: 280px;
+            color: rgba(0, 255, 136, 0.85);
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            text-align: left;
+            font-style: italic;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            backdrop-filter: blur(5px);
+            line-height: 1.4;
+            white-space: normal;
+        }
+
+        /* Tooltip description - goes above for garage */
+        .tab-dropdown a .description-top {
+            left: 50%;
+            right: auto;
+            top: auto;
+            bottom: 105%;
+            transform: translateX(-50%);
+        }
+
+        .tab-dropdown a:hover .description {
+            opacity: 1;
+            visibility: visible;
         }
 
         /* Left Side Buttons */
@@ -240,19 +284,11 @@
         @media (max-width: 900px) {
             .top-tabs {
                 gap: 20px;
+                bottom: 50px;
             }
             .tab-button {
                 padding: 8px 20px;
                 font-size: 0.9rem;
-            }
-            .left-button {
-                left: 25px;
-                padding: 10px 22px;
-                font-size: 0.8rem;
-            }
-            .garage-button {
-                padding: 11px 32px;
-                font-size: 0.93rem;
             }
             .vault-button {
                 right: 18px;
@@ -262,21 +298,21 @@
 
         @media (max-width: 600px) {
             .title {
-                font-size: 1.45rem;
-                margin-bottom: 45px;
+                font-size: 1.25rem;
+            }
+            .slogan {
+                font-size: 0.7rem;
             }
             .top-tabs {
-                top: 20px;
-                gap: 15px;
+                bottom: 45px;
+                gap: 10px;
+                flex-wrap: wrap;
+                justify-content: center;
+                width: 90%;
             }
             .tab-button {
-                padding: 7px 16px;
-                font-size: 0.8rem;
-            }
-            .left-button {
-                left: 18px;
-                font-size: 0.77rem;
-                padding: 9px 20px;
+                padding: 7px 14px;
+                font-size: 0.75rem;
             }
             .container {
                 padding-top: 110px;
@@ -285,8 +321,6 @@
             #canvas {
                 font-size: 12px;
             }
-            .diamonds-button   { top: 38%; }
-            .cyberboard-button { top: 50%; }
         }
     </style>
 </head>
@@ -294,29 +328,64 @@
     <!-- Matrix Rain Canvas -->
     <canvas id="rain-canvas"></canvas>
 
+    <!-- Top Title and Slogan -->
+    <div class="top-text">
+        <div class="title">ORIGINS OF LATE</div>
+        <div class="slogan">A personal digital studio</div>
+    </div>
+
     <!-- Top Tabs -->
     <div class="top-tabs">
         <div class="tab">
             <button class="tab-button">GAMES</button>
             <div class="tab-dropdown">
-                <a href="https://originsoflate.xyz/diamondintherough/">DIAMONDS</a>
-                <a href="https://originsoflate.xyz/mines/">MINES</a>
-                <a href="https://originsoflate.xyz/sunsethoops/">HOOPS</a>
-                <a href="https://originsoflate.xyz/chess/">CHESS</a>
+                <a href="https://originsoflate.xyz/diamondintherough/">
+                    DIAMONDS<span class="emoji">💎</span>
+                    <span class="description">Upgrade your scythe, collect rubies, find the diamond in the rough</span>
+                </a>
+                <a href="https://originsoflate.xyz/mines/">
+                    MINES<span class="emoji">⛏️</span>
+                    <span class="description">50/50 chance to make it through the minefield?... Or worse?</span>
+                </a>
+                <a href="https://originsoflate.xyz/sunsethoops/">
+                    HOOPS<span class="emoji">🏀</span>
+                    <span class="description">Interactive hoops playground</span>
+                </a>
+                <a href="https://originsoflate.xyz/chess/">
+                    CHESS<span class="emoji">♟️</span>
+                    <span class="description">Private 2 player chessboard</span>
+                </a>
             </div>
         </div>
         <div class="tab">
             <button class="tab-button">SOUNDS</button>
             <div class="tab-dropdown">
-                <a href="https://originsoflate.xyz/pondering/">PONDERING</a>
-                <a href="#">MUSIC</a>
+                <a href="https://originsoflate.xyz/pondering/">
+                    PONDERING<span class="emoji">🧙‍♂️</span>
+                    <span class="description">Interactive polyrhythm sounds</span>
+                </a>
+                <a href="#">
+                    MUSIC<span class="emoji">🎵</span>
+                    <span class="description">Coming Soon...</span>
+                </a>
             </div>
         </div>
         <div class="tab">
-            <button class="tab-button">TECH</button>
+            <button class="tab-button">BOARD</button>
             <div class="tab-dropdown">
-                <a href="https://originsoflate.xyz/cyberboard/">CYBERBOARD</a>
-                <a href="https://shaden.technology/garage/">THE GARAGE</a>
+                <a href="https://originsoflate.xyz/cyberboard/">
+                    CYBERBOARD
+                    <span class="description">Leave a message</span>
+                </a>
+            </div>
+        </div>
+        <div class="tab">
+            <button class="tab-button">RELICS</button>
+            <div class="tab-dropdown">
+                <a href="https://shaden.technology/garage/">
+                    THE GARAGE
+                    <span class="description description-top">Where it all started...</span>
+                </a>
             </div>
         </div>
     </div>
@@ -324,12 +393,6 @@
     <!-- Main Content -->
     <div class="container">
         <div id="canvas"></div>
-    </div>
-
-    <!-- Bottom Title and Slogan -->
-    <div class="bottom-text">
-        <div class="title">ORIGINS OF LATE</div>
-        <div class="slogan">A personal digital studio</div>
     </div>
 
     <!-- Vault Bottom Right -->
