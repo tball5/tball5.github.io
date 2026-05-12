@@ -46,11 +46,13 @@
             z-index: 1;
             min-height: 100vh;
             width: 100%;
+            max-width: 100vw;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 90px 20px 200px;
+            padding: 90px 0 200px;
+            overflow-x: hidden;
         }
 
         #canvas {
@@ -62,7 +64,8 @@
             white-space: pre;
             text-align: center;
             margin: 0 auto;
-            display: block;
+            display: inline-block;
+            padding: 0;
         }
 
         /* Top Title Container */
@@ -348,19 +351,24 @@
             .container {
                 padding-top: 110px;
                 padding-bottom: 160px;
+                padding-left: 0;
+                padding-right: 0;
                 width: 100%;
                 max-width: 100vw;
                 overflow-x: hidden;
                 align-items: center;
                 justify-content: center;
+                text-align: center;
             }
             #canvas {
                 font-size: 8px;
+                letter-spacing: 0.05em;
                 max-width: 100%;
                 overflow-x: hidden;
                 margin: 0 auto;
                 text-align: center;
                 display: inline-block;
+                padding: 0;
             }
             .tab-dropdown {
                 min-width: 140px;
@@ -471,6 +479,57 @@
     <a href="https://originsoflate.xyz/vault/" class="vault-button">VAULT</a>
 
     <script>
+        // Mobile detection and double-tap handling for links
+        function isMobile() {
+            return window.innerWidth <= 900 || ('ontouchstart' in window);
+        }
+
+        // Add double-tap behavior to dropdown links on mobile
+        document.addEventListener('DOMContentLoaded', () => {
+            const dropdownLinks = document.querySelectorAll('.tab-dropdown a');
+            dropdownLinks.forEach(link => {
+                let tapped = false;
+                link.addEventListener('click', (e) => {
+                    if (isMobile() && !tapped) {
+                        e.preventDefault();
+                        // Hide all other descriptions
+                        dropdownLinks.forEach(otherLink => {
+                            if (otherLink !== link) {
+                                const desc = otherLink.querySelector('.description');
+                                if (desc) {
+                                    desc.style.opacity = '0';
+                                    desc.style.visibility = 'hidden';
+                                }
+                                otherLink.dataset.tapped = 'false';
+                            }
+                        });
+                        // Show this description
+                        const description = link.querySelector('.description');
+                        if (description) {
+                            description.style.opacity = '1';
+                            description.style.visibility = 'visible';
+                        }
+                        tapped = true;
+                        link.dataset.tapped = 'true';
+                        // Reset after 3 seconds if not clicked again
+                        setTimeout(() => {
+                            if (link.dataset.tapped === 'true') {
+                                tapped = false;
+                                link.dataset.tapped = 'false';
+                                if (description) {
+                                    description.style.opacity = '';
+                                    description.style.visibility = '';
+                                }
+                            }
+                        }, 3000);
+                    } else {
+                        tapped = false;
+                        link.dataset.tapped = 'false';
+                    }
+                });
+            });
+        });
+
         // Matrix Rain
         const rainCanvas = document.getElementById('rain-canvas');
         const ctx = rainCanvas.getContext('2d');
