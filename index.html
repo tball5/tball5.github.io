@@ -45,6 +45,7 @@
             position: relative;
             z-index: 1;
             min-height: 100vh;
+            width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -60,7 +61,8 @@
             user-select: none;
             white-space: pre;
             text-align: center;
-            margin: auto;
+            margin: 0 auto;
+            display: block;
         }
 
         /* Top Title Container */
@@ -261,14 +263,14 @@
             text-shadow: 0 0 8px rgba(0, 255, 136, 0.5);
         }
 
-        /* Vault Button */
+        /* Vault Button - completely transparent until clicked */
         .vault-button {
             position: fixed;
             bottom: 22px;
             right: 28px;
             padding: 8px 22px;
             background: transparent;
-            color: rgba(0, 255, 136, 0.25);
+            color: rgba(0, 255, 136, 0);
             font-size: 0.65rem;
             font-weight: normal;
             border: none;
@@ -281,8 +283,12 @@
         }
 
         .vault-button:hover {
-            color: rgba(0, 255, 136, 0.45);
-            transform: translateY(-2px);
+            color: rgba(0, 255, 136, 0);
+        }
+
+        .vault-button:active,
+        .vault-button:focus {
+            color: rgba(0, 255, 136, 0.4);
         }
 
         /* Left button positions */
@@ -339,11 +345,16 @@
                 width: 100%;
                 max-width: 100vw;
                 overflow-x: hidden;
+                align-items: center;
+                justify-content: center;
             }
             #canvas {
                 font-size: 10px;
                 max-width: 100%;
                 overflow-x: hidden;
+                margin: 0 auto;
+                text-align: center;
+                display: block;
             }
             .tab-dropdown {
                 min-width: 140px;
