@@ -69,10 +69,12 @@
         .top-text {
             position: fixed;
             top: 30px;
-            left: 50%;
-            transform: translateX(-50%);
+            left: 0;
+            right: 0;
+            width: 100%;
             text-align: center;
             z-index: 5;
+            padding: 0 10px;
         }
 
         .title {
@@ -82,6 +84,7 @@
             letter-spacing: 0.25em;
             text-align: center;
             text-shadow: 0 0 12px rgba(0, 255, 136, 0.4);
+            white-space: nowrap;
         }
 
         .slogan {
@@ -96,9 +99,11 @@
         .top-tabs {
             position: fixed;
             bottom: 60px;
-            left: 50%;
-            transform: translateX(-50%);
+            left: 0;
+            right: 0;
+            width: 100%;
             display: flex;
+            justify-content: center;
             gap: 40px;
             z-index: 20;
         }
@@ -323,17 +328,18 @@
 
         @media (max-width: 600px) {
             .title {
-                font-size: 1.25rem;
+                font-size: 1.1rem;
+                letter-spacing: 0.2em;
             }
             .slogan {
-                font-size: 0.7rem;
+                font-size: 0.65rem;
             }
             .top-tabs {
                 bottom: 45px;
                 gap: 10px;
                 flex-wrap: wrap;
-                justify-content: center;
-                width: 90%;
+                width: 100%;
+                padding: 0 10px;
             }
             .tab-button {
                 padding: 7px 14px;
@@ -349,12 +355,12 @@
                 justify-content: center;
             }
             #canvas {
-                font-size: 10px;
+                font-size: 8px;
                 max-width: 100%;
                 overflow-x: hidden;
                 margin: 0 auto;
                 text-align: center;
-                display: block;
+                display: inline-block;
             }
             .tab-dropdown {
                 min-width: 140px;
@@ -372,8 +378,12 @@
         }
 
         @media (max-width: 400px) {
+            .title {
+                font-size: 0.95rem;
+                letter-spacing: 0.15em;
+            }
             #canvas {
-                font-size: 8px;
+                font-size: 7px;
             }
             .top-tabs {
                 gap: 5px;
