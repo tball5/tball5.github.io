@@ -165,6 +165,23 @@
             text-align: left;
             border-bottom: 1px solid rgba(0, 255, 136, 0.1);
             position: relative;
+            white-space: nowrap;
+        }
+
+        .tab-dropdown {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-bottom: 10px;
+            background: rgba(10, 10, 10, 0.85);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            min-width: 180px;
+            width: max-content;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
         }
 
         .tab-dropdown a:last-child {
@@ -424,16 +441,16 @@
                     <span class="description">Upgrade your scythe, collect rubies, find the diamond in the rough</span>
                 </a>
                 <a href="https://originsoflate.xyz/mines/">
-                    MINES<span class="emoji">⛏️</span>
+                    MINES<span class="emoji">💣</span>
                     <span class="description">50/50 chance to make it through the minefield?... Or worse?</span>
                 </a>
                 <a href="https://originsoflate.xyz/sunsethoops/">
                     HOOPS<span class="emoji">🏀</span>
-                    <span class="description">Interactive hoops playground</span>
+                    <span class="description">Interactive Digital Hoops Playground</span>
                 </a>
                 <a href="https://originsoflate.xyz/chess/">
                     CHESS<span class="emoji">♟️</span>
-                    <span class="description">Private 2 player chessboard</span>
+                    <span class="description">Private Realtime Two Player Chessboard</span>
                 </a>
             </div>
         </div>
@@ -454,8 +471,8 @@
             <button class="tab-button">BOARD</button>
             <div class="tab-dropdown">
                 <a href="https://originsoflate.xyz/cyberboard/">
-                    CYBERBOARD
-                    <span class="description">Leave a message</span>
+                    CYBERBOARD<span class="emoji">🖊️</span>
+                    <span class="description">Write a message...</span>
                 </a>
             </div>
         </div>
@@ -463,7 +480,7 @@
             <button class="tab-button">RELICS</button>
             <div class="tab-dropdown">
                 <a href="https://shaden.technology/garage/">
-                    THE GARAGE
+                    THE GARAGE<span class="emoji">🏓</span>
                     <span class="description description-top">Where it all started...</span>
                 </a>
             </div>
